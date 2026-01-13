@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 m-0">Dashboard</h1>
+  <div class="d-flex align-items-center gap-2">
+    <span class="me-2">Hello, {{ request.user.username }}!</span>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+    </form>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-12 col-md-6">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Welcome</h5>
+        <p class="card-text">You are logged in. Use the navigation or add features here.</p>
+        <a href="/" class="btn btn-primary">Home</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Next Steps</h5>
+        <ul class="mb-0">
+          <li>Build out your app content on this page.</li>
+          <li>Add links to key features.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

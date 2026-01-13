@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Alt Text Copy Panel (EN)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+  .toolbar { display:flex; gap:8px; align-items:center; margin-bottom:16px; flex-wrap: wrap; }
+  .item { border:1px solid #ddd; border-radius:12px; padding:12px; margin:12px 0; background:#fafafa; }
+  .item button { cursor:pointer; }
+  .alt { white-space: pre-wrap; word-wrap: break-word; margin:8px 0; background:#fff; padding:8px; border-radius:8px; border:1px solid #eee; }
+  .page { font-size: 12px; color:#666; }
+  .thumb { max-height:64px; max-width:96px; margin-right:8px; border-radius:8px; vertical-align: middle; }
+  .meta { display:flex; gap:8px; align-items:center; margin-bottom:6px; }
+  #toast { position:fixed; right:16px; bottom:16px; background:#222; color:#fff; padding:10px 14px; border-radius:10px; opacity:0; transition:opacity .2s; }
+  #toast.show { opacity:0.92; }
+</style>
+</head>
+<body>
+  <h1>Alt Text Copy Panel (EN)</h1>
+  <div class="toolbar">
+    <button onclick="copyAll()">Copy all</button>
+    <span id="count"></span>
+  </div>
+  
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/d5f0e3f5/Extracted_Image_1.png" alt="" class="thumb"/>
+            <span class="page">Page 1</span>
+          </div>
+          <pre id="alt1" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt1')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/d5f0e3f5/Extracted_Image_2.png" alt="" class="thumb"/>
+            <span class="page">Page 3</span>
+          </div>
+          <pre id="alt2" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt2')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/d5f0e3f5/Extracted_Image_3.png" alt="" class="thumb"/>
+            <span class="page">Page 7</span>
+          </div>
+          <pre id="alt3" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt3')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/d5f0e3f5/Extracted_Image_4.png" alt="" class="thumb"/>
+            <span class="page">Page 7</span>
+          </div>
+          <pre id="alt4" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt4')">Copy</button>
+        </div>
+        
+  <div id="toast" role="status" aria-live="polite">Copied!</div>
+<script>
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg || 'Copied!';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 900);
+  }
+  async function copyText(elemId) {
+    const el = document.getElementById(elemId);
+    const txt = el ? el.textContent : '';
+    try {
+      await navigator.clipboard.writeText(txt);
+      showToast('Copied');
+    } catch (e) {
+      const r = document.createRange(); r.selectNode(el);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      document.execCommand('copy'); sel.removeAllRanges();
+      showToast('Copied');
+    }
+  }
+  async function copyAll() {
+    const nodes = document.querySelectorAll('.alt');
+    const block = Array.from(nodes).map(n => n.textContent.trim()).filter(Boolean).join('\n\n');
+    try {
+      await navigator.clipboard.writeText(block);
+      showToast('All copied');
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = block; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      showToast('All copied');
+    }
+  }
+  document.getElementById('count').textContent = document.querySelectorAll('.item').length + ' items';
+</script>
+</body>
+</html>

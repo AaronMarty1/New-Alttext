@@ -1,0 +1,82 @@
+Metadata-Version: 2.4
+Name: pdfix-sdk
+Version: 8.7.9
+Summary: PDFix SDK - Automated PDF Remediation, Data Extraction, HTML Conversion
+Home-page: https://github.com/pdfix/pdfix-sdk-pypi-package
+Author: PDFix s.r.o.
+Author-email: support@pdfix.net
+Project-URL: Documentation, https://github.com/pdfix/pdfix-sdk-pypi-package
+Project-URL: Bug Reports, https://github.com/pdfix/pdfix-sdk-pypi-package/issues
+Project-URL: Source Code, https://github.com/pdfix/pdfix-sdk-pypi-package
+Project-URL: Homepage, https://pdfix.net
+Project-URL: License, https://pdfix.net/terms
+Keywords: pdfix,pdf,accessibility,remediation,extraction,html,conversion,render,watermark,redact,sign,forms
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Provides-Extra: dev
+Requires-Dist: check-manifest; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# PDFix SDK Package
+
+## PDFix SDK - High Performace PDF library
+
+`keywords: pdf, accessibility, remediation, extraction, html, conversion, render, watermark, redact, sign, forms`
+
+PDFix SDK analyses the key components of the PDF and makes it easily available for you to manipulate. It’s a high-performance library that helps software developers and end-users integrate PDF functionality into their workflows.
+
+## Features
+- Automated PDF Tagging and Remediation (PDF/UA)
+- Automated Data Extraction (JSON, XML)
+- PDF to HTML Conversion (Original, Responsive, by Tags)
+- Standard PDF Editing Features (render, watermark, redact, sign, forms, and more)
+
+## Change log
+[https://github.com/pdfix/pdfix_sdk_builds/blob/main/changelog.md](https://github.com/pdfix/pdfix_sdk_builds/blob/main/changelog.md)
+
+## Supported platforms
+- Linux amd64, aarch64
+- Windows amd64
+- macOS amd64, arm64
+
+## Installation 
+```
+pip install pdfix-sdk
+```
+
+## Example
+
+```
+from pdfixsdk.Pdfix import *
+
+pdfix = GetPdfix()
+doc = pdfix.OpenDoc("path/to/your.pdf", "")
+print(doc.GetNumPages())
+doc.Close()
+```
+
+More Python examples on [https://github.com/pdfix/pdfix_sdk_example_python](https://github.com/pdfix/pdfix_sdk_example_python)
+

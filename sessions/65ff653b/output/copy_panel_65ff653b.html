@@ -1,0 +1,514 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Alt Text Copy Panel (EN)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+  .toolbar { display:flex; gap:8px; align-items:center; margin-bottom:16px; flex-wrap: wrap; }
+  .item { border:1px solid #ddd; border-radius:12px; padding:12px; margin:12px 0; background:#fafafa; }
+  .item button { cursor:pointer; }
+  .alt { white-space: pre-wrap; word-wrap: break-word; margin:8px 0; background:#fff; padding:8px; border-radius:8px; border:1px solid #eee; }
+  .page { font-size: 12px; color:#666; }
+  .thumb { max-height:64px; max-width:96px; margin-right:8px; border-radius:8px; vertical-align: middle; }
+  .meta { display:flex; gap:8px; align-items:center; margin-bottom:6px; }
+  #toast { position:fixed; right:16px; bottom:16px; background:#222; color:#fff; padding:10px 14px; border-radius:10px; opacity:0; transition:opacity .2s; }
+  #toast.show { opacity:0.92; }
+</style>
+</head>
+<body>
+  <h1>Alt Text Copy Panel (EN)</h1>
+  <div class="toolbar">
+    <button onclick="copyAll()">Copy all</button>
+    <span id="count"></span>
+  </div>
+  
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_1.png" alt="" class="thumb"/>
+            <span class="page">Page 1</span>
+          </div>
+          <pre id="alt1" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt1')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_2.png" alt="" class="thumb"/>
+            <span class="page">Page 1</span>
+          </div>
+          <pre id="alt2" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt2')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_3.png" alt="" class="thumb"/>
+            <span class="page">Page 1</span>
+          </div>
+          <pre id="alt3" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt3')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_4.png" alt="" class="thumb"/>
+            <span class="page">Page 1</span>
+          </div>
+          <pre id="alt4" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt4')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_5.png" alt="" class="thumb"/>
+            <span class="page">Page 1</span>
+          </div>
+          <pre id="alt5" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt5')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_6.png" alt="" class="thumb"/>
+            <span class="page">Page 1</span>
+          </div>
+          <pre id="alt6" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt6')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_7.png" alt="" class="thumb"/>
+            <span class="page">Page 1</span>
+          </div>
+          <pre id="alt7" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt7')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_8.png" alt="" class="thumb"/>
+            <span class="page">Page 1</span>
+          </div>
+          <pre id="alt8" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt8')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_9.png" alt="" class="thumb"/>
+            <span class="page">Page 1</span>
+          </div>
+          <pre id="alt9" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt9')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_10.png" alt="" class="thumb"/>
+            <span class="page">Page 2</span>
+          </div>
+          <pre id="alt10" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt10')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_11.png" alt="" class="thumb"/>
+            <span class="page">Page 2</span>
+          </div>
+          <pre id="alt11" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt11')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_12.png" alt="" class="thumb"/>
+            <span class="page">Page 2</span>
+          </div>
+          <pre id="alt12" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt12')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_13.png" alt="" class="thumb"/>
+            <span class="page">Page 2</span>
+          </div>
+          <pre id="alt13" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt13')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_14.png" alt="" class="thumb"/>
+            <span class="page">Page 3</span>
+          </div>
+          <pre id="alt14" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt14')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_15.png" alt="" class="thumb"/>
+            <span class="page">Page 3</span>
+          </div>
+          <pre id="alt15" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt15')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_16.png" alt="" class="thumb"/>
+            <span class="page">Page 3</span>
+          </div>
+          <pre id="alt16" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt16')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_17.png" alt="" class="thumb"/>
+            <span class="page">Page 4</span>
+          </div>
+          <pre id="alt17" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt17')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_18.png" alt="" class="thumb"/>
+            <span class="page">Page 4</span>
+          </div>
+          <pre id="alt18" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt18')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_19.png" alt="" class="thumb"/>
+            <span class="page">Page 4</span>
+          </div>
+          <pre id="alt19" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt19')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_20.png" alt="" class="thumb"/>
+            <span class="page">Page 5</span>
+          </div>
+          <pre id="alt20" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt20')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_21.png" alt="" class="thumb"/>
+            <span class="page">Page 5</span>
+          </div>
+          <pre id="alt21" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt21')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_22.png" alt="" class="thumb"/>
+            <span class="page">Page 6</span>
+          </div>
+          <pre id="alt22" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt22')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_23.png" alt="" class="thumb"/>
+            <span class="page">Page 6</span>
+          </div>
+          <pre id="alt23" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt23')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_24.png" alt="" class="thumb"/>
+            <span class="page">Page 7</span>
+          </div>
+          <pre id="alt24" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt24')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_25.png" alt="" class="thumb"/>
+            <span class="page">Page 8</span>
+          </div>
+          <pre id="alt25" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt25')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_26.png" alt="" class="thumb"/>
+            <span class="page">Page 8</span>
+          </div>
+          <pre id="alt26" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt26')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_27.png" alt="" class="thumb"/>
+            <span class="page">Page 8</span>
+          </div>
+          <pre id="alt27" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt27')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_28.png" alt="" class="thumb"/>
+            <span class="page">Page 9</span>
+          </div>
+          <pre id="alt28" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt28')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_29.png" alt="" class="thumb"/>
+            <span class="page">Page 10</span>
+          </div>
+          <pre id="alt29" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt29')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_30.png" alt="" class="thumb"/>
+            <span class="page">Page 10</span>
+          </div>
+          <pre id="alt30" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt30')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_31.png" alt="" class="thumb"/>
+            <span class="page">Page 11</span>
+          </div>
+          <pre id="alt31" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt31')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_32.png" alt="" class="thumb"/>
+            <span class="page">Page 11</span>
+          </div>
+          <pre id="alt32" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt32')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_33.png" alt="" class="thumb"/>
+            <span class="page">Page 11</span>
+          </div>
+          <pre id="alt33" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt33')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_34.png" alt="" class="thumb"/>
+            <span class="page">Page 12</span>
+          </div>
+          <pre id="alt34" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt34')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_35.png" alt="" class="thumb"/>
+            <span class="page">Page 13</span>
+          </div>
+          <pre id="alt35" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt35')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_36.png" alt="" class="thumb"/>
+            <span class="page">Page 14</span>
+          </div>
+          <pre id="alt36" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt36')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_37.png" alt="" class="thumb"/>
+            <span class="page">Page 14</span>
+          </div>
+          <pre id="alt37" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt37')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_38.png" alt="" class="thumb"/>
+            <span class="page">Page 15</span>
+          </div>
+          <pre id="alt38" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt38')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_39.png" alt="" class="thumb"/>
+            <span class="page">Page 15</span>
+          </div>
+          <pre id="alt39" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt39')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_40.png" alt="" class="thumb"/>
+            <span class="page">Page 15</span>
+          </div>
+          <pre id="alt40" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt40')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_41.png" alt="" class="thumb"/>
+            <span class="page">Page 15</span>
+          </div>
+          <pre id="alt41" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt41')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_42.png" alt="" class="thumb"/>
+            <span class="page">Page 16</span>
+          </div>
+          <pre id="alt42" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt42')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_43.png" alt="" class="thumb"/>
+            <span class="page">Page 17</span>
+          </div>
+          <pre id="alt43" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt43')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_44.png" alt="" class="thumb"/>
+            <span class="page">Page 18</span>
+          </div>
+          <pre id="alt44" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt44')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_45.png" alt="" class="thumb"/>
+            <span class="page">Page 19</span>
+          </div>
+          <pre id="alt45" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt45')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_46.png" alt="" class="thumb"/>
+            <span class="page">Page 20</span>
+          </div>
+          <pre id="alt46" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt46')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_47.png" alt="" class="thumb"/>
+            <span class="page">Page 21</span>
+          </div>
+          <pre id="alt47" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt47')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_48.png" alt="" class="thumb"/>
+            <span class="page">Page 21</span>
+          </div>
+          <pre id="alt48" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt48')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_49.png" alt="" class="thumb"/>
+            <span class="page">Page 21</span>
+          </div>
+          <pre id="alt49" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt49')">Copy</button>
+        </div>
+        
+        <div class="item">
+          <div class="meta">
+            <img src="/pdf_processor/extracted_images/65ff653b/Extracted_Image_50.png" alt="" class="thumb"/>
+            <span class="page">Page 21</span>
+          </div>
+          <pre id="alt50" class="alt">[Error: Error code: 429 - {&#x27;error&#x27;: {&#x27;message&#x27;: &#x27;You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.&#x27;, &#x27;type&#x27;: &#x27;insufficient_quota&#x27;, &#x27;param&#x27;: None, &#x27;code&#x27;: &#x27;insufficient_quota&#x27;}}]</pre>
+          <button onclick="copyText('alt50')">Copy</button>
+        </div>
+        
+  <div id="toast" role="status" aria-live="polite">Copied!</div>
+<script>
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg || 'Copied!';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 900);
+  }
+  async function copyText(elemId) {
+    const el = document.getElementById(elemId);
+    const txt = el ? el.textContent : '';
+    try {
+      await navigator.clipboard.writeText(txt);
+      showToast('Copied');
+    } catch (e) {
+      const r = document.createRange(); r.selectNode(el);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      document.execCommand('copy'); sel.removeAllRanges();
+      showToast('Copied');
+    }
+  }
+  async function copyAll() {
+    const nodes = document.querySelectorAll('.alt');
+    const block = Array.from(nodes).map(n => n.textContent.trim()).filter(Boolean).join('\n\n');
+    try {
+      await navigator.clipboard.writeText(block);
+      showToast('All copied');
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = block; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      showToast('All copied');
+    }
+  }
+  document.getElementById('count').textContent = document.querySelectorAll('.item').length + ' items';
+</script>
+</body>
+</html>

@@ -1,0 +1,976 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Access AltText</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            padding-top: 0px;
+        }
+
+        /* Keep the nav items on one row */
+        .navbar-nav { 
+            flex-wrap: nowrap;
+        }
+
+        /* Prevent *each link’s text* from breaking onto two lines */
+        .navbar-nav .nav-link {
+            white-space: nowrap;
+        }
+
+        .app-wrapper {
+            background-color: #1f1f1f;  /* slightly lighter than page background */
+            border: 2px solid #fd6262;  /* your accent color */
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 900px;
+            margin: 30px auto;          /* centers the box */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3); /* subtle drop shadow */
+        }
+        .app-container {
+            display:flex;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            }
+
+        .list-item {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #f0f0f0;
+            color: #000;  /* ✅ Fix contrast */
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .list-item.selected {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        #thumbnail {
+            margin-top: 20px;
+            max-width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* 1) Make the links smaller + white */
+        .navbar-nav .nav-link {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;              /* try 12px if you want even smaller */
+            color: #ffffff !important;
+            padding: .25rem .5rem;        /* trims the built‑in Bootstrap padding */
+        }
+
+        /* 2) Add space between links */
+        .navbar-nav {
+            gap: 16px;                    /* easy spacing between flex items */
+        }
+
+        /* Hover color */
+        .navbar-nav .nav-link:hover {
+            color: #fd6262 !important;
+        }
+
+
+        .list-group {
+            border: 1px solid #aaa;
+            border-radius: 8px;
+            min-height: 100px;
+            background-color: #fff; /* consistent with list-item background */
+        }
+
+        /* Center title + upload form */
+        .header-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+        }
+
+        .app-title {
+        font-size: 36px;
+        color: #333;
+        margin-bottom: 20px;
+        }
+
+        /* Action buttons below the lists */
+        #action-controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        }
+
+        /* Ensure preview controls are centered too */
+        #preview-controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+        }
+
+        /* Keep things responsive */
+        .column {
+        flex: 1;
+        min-width: 300px;
+        max-height: 500px;
+        overflow-y: auto;
+        background: #fff;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        }
+
+        /* Match AccessAltText.com button color */
+        .btn-primary,
+        .btn-success,
+        .btn-outline-primary,
+        .btn-outline-secondary {
+        background-color: #fd6262;
+        border-color: #fd6262;
+        color: #000;
+        }
+
+        .btn-outline-primary:hover,
+        .btn-outline-secondary:hover,
+        .btn-primary:hover,
+        .btn-success:hover {
+        background-color: #c94444;  /* darker hover version */
+        border-color: #c94444;
+        }
+
+        #imageStatus.done-status {
+        text-align: center;
+        margin-bottom: 2em;  /* more space below the message */
+        font-weight: 500;
+        font-size: 1.05rem;   /* just a tiny bump to distinguish it */
+        color: #e0e0e0;       /* optional: lighter gray so it doesn’t compete */
+        }
+
+        body,
+        h1, h2, h3, h4, h5, h6,
+        p,
+        .btn,
+        .form-control,
+        .list-group-item,
+        .list-item,
+        .header-section,
+        label {
+        font-family: 'Poppins', sans-serif !important;
+        }
+
+        #readyWrap { display: none !important; }     /* always hidden by default */
+        #readyWrap.show { display: flex !important; }/* revealed when we add .show */
+
+</style>
+
+</head>
+<body class="d-flex flex-column" style="min-height:100vh; background-color:#1e1e1e; color:#fff; margin:0; padding:0;">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-xxl navbar-dark" style="background-color: #141416; width: 100%; margin: 0; padding: 0;">
+    <div class="container-fluid px-5">
+        <!-- Logo on the left -->
+        <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="{% static 'AccessLogo1.png' %}" alt="Access AltText Logo" style="max-height: 125px;">
+        </a>
+
+        <!-- Mobile nav toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links on the right -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="https://www.accessalttext.com/plans-pricing">Plans & Pricing</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.accessalttext.com/subscription">Subscription</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.accessalttext.com/508-remediation">508 Remediation</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.accessalttext.com/privacy-policy">Privacy Policy</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.accessalttext.com/terms-and-conditions">Terms and Conditions</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.accessalttext.com/accessibility-statement">Accessibility Statement</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}" >Logout</a></li>
+        </ul>
+        </div>
+    </div>
+    </nav>
+        
+  <!-- Put everything below the navbar inside this container -->
+    <main>
+        <div class="app-wrapper">
+
+            <div class="w-100 text-center mt-3">
+                <p class="lead text-white">Upload a PDF, select images, and generate accessible alt text.</p>
+            </div>
+
+            <div id="uploadError" class="text-danger mb-3" style="display:none;"></div>
+
+            <form id="uploadForm" class="d-flex flex-column align-items-center mb-4" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="file" accept=".pdf" class="form-control mb-2 w-100" style="max-width: 300px;" required />
+                <button class="btn btn-primary" type="submit">Upload PDF</button>
+            </form>
+
+            <div id="imageStatus" class="status-line" aria-live="polite"></div>
+
+            <!-- Progress bar stays full-width within the container -->
+            <div id="imageExtractProgressContainer" style="display:none; margin-top:10px;">
+                <p>Extracting images: <span id="imageExtractPercent">0%</span></p>
+                <progress id="imageExtractProgress" value="0" max="100" style="width:100%;"></progress>
+            </div>
+
+            <!-- Image Lists: use Bootstrap grid so they center and respond -->
+            <div class="row justify-content-center g-4 mb-4">
+                <!-- PROCESS Column -->
+                <div class="col-12 col-sm-6 col-md-5 col-lg-4 text-center">
+                <h5 class="mb-2">PROCESS</h5>
+                <ul id="process-list" class="list-group mx-auto" style="font-size:0.85rem; max-height:300px; overflow-y:auto; width:250px;">
+                    <li class="text-muted">No images yet</li>
+                </ul>
+                </div>
+
+                <!-- DO NOT PROCESS Column -->
+                <div class="col-12 col-sm-6 col-md-5 col-lg-4 text-center">
+                <h5 class="mb-2">DO NOT PROCESS</h5>
+                <ul id="exclude-list" class="list-group mx-auto" style="font-size:0.85rem; max-height:300px; overflow-y:auto; width:250px;">
+                    <li class="text-muted">No images yet</li>
+                </ul>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div id="action-controls" style="display:none;" class="mb-4 d-flex flex-column align-items-center gap-2">
+                <div class="d-flex gap-3 flex-wrap justify-content-center">
+                <button class="btn btn-outline-primary" onclick="moveImage('process-list','exclude-list')">→ Exclude</button>
+                <button class="btn btn-outline-secondary" onclick="moveImage('exclude-list','process-list')">← Include</button>
+                </div>
+                <div class="d-flex gap-3 flex-wrap justify-content-center mt-2">
+                <button id="generateEnglishBtn" class="btn btn-success">Generate English Alt Text</button>
+                <button id="generateSpanishBtn" class="btn btn-success">Generate Spanish Alt Text</button>
+                </div>
+            </div>
+
+            <!-- Alt Text Progress -->
+            <div id="altTextProgressContainer" style="display:none;" class="mb-4">
+                <p>Generating alt text and creating Word file...</p>
+                <div class="progress">
+                <div id="altTextProgress" class="progress-bar progress-bar-striped progress-bar-animated" style="width:0%"></div>
+                </div>
+            </div>
+
+            <!-- Ready actions (revealed when alt text hits 100%) -->
+            <div id="readyWrap" style="display:none;" class="mb-4 d-flex gap-2 justify-content-center align-items-center">
+                <a id="openCopyPanel" class="btn btn-outline-primary" href="#" target="_blank" rel="noopener">Open Copy Panel</a>
+                <span class="ms-2" 
+                        data-bs-toggle="tooltip" 
+                        data-bs-placement="right" 
+                        title="Opens a new browser window with your generated alt text and buttons to conveniently copy to your clipboard.">
+                    <i class="bi bi-question-circle" style="font-size:1.25rem; color:#fd6262; cursor:pointer;"></i>
+                </span>
+                </div>
+
+            <!-- Image Preview -->
+            <div id="preview-controls" style="display:none;" class="text-center">
+                <h4 class="mt-4">Image Preview</h4>
+                <div class="d-flex justify-content-center mb-3">
+                <img id="thumbnail" class="thumbnail border rounded" style="max-width:200px; display:none;" />
+                </div>
+                <div class="mb-5">
+                <button onclick="flipImage('horizontal')" class="btn btn-outline-primary me-2">Flip Horizontally</button>
+                <button onclick="flipImage('vertical')" class="btn btn-outline-primary">Flip Vertically</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+
+<script>
+// Helper function to get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+let hasDownloaded = false;
+let imageFilenames = [];
+let currentImage = null;
+let altTextEventSource = null;
+let downloadPollingIntervalId = null;
+let currentSessionId = null;
+let currentLang = null;
+let sid = null;  // 🔑 session id from backend
+let copyPanelAvailable = false;  // stays false until alt text hits 100%
+let pendingDocxBlob = null;     // holds the ready .docx until user clicks Save
+let pendingDocxName = null;     // suggested filename
+let imageEventSource = null;   // 🔄 we'll track the image SSE globally
+
+// Ensure stale timers/streams don't survive a refresh/back-forward cache resume
+window.addEventListener("pageshow", () => {
+  try { altTextEventSource?.close(); } catch {}
+  try { imageEventSource?.close(); } catch {}
+  if (downloadPollingIntervalId) {
+    clearInterval(downloadPollingIntervalId);
+    downloadPollingIntervalId = null;
+  }
+  hasDownloaded = false;
+  pendingDocxBlob = null;
+  pendingDocxName = null;
+
+  resetProgressUI();
+});
+
+function resetProgressUI({ freshUpload = false } = {}) {
+  // Image extraction bar
+  const imgContainer = document.getElementById("imageExtractProgressContainer");
+  const imgBar = document.getElementById("imageExtractProgress");
+  const imgLabel = document.getElementById("imageExtractPercent");
+  if (imgContainer && imgBar && imgLabel) {
+    imgBar.value = 0;
+    imgLabel.textContent = "0%";
+    imgContainer.style.display = freshUpload ? "block" : "none";
+
+    // ✅ Clear status text only on a fresh upload
+    if (freshUpload) {
+      const statusEl = document.getElementById("imageStatus");
+      if (statusEl) statusEl.textContent = "";
+    }
+  }
+
+  // Alt‑text progress bar (Bootstrap .progress-bar)
+  const atContainer = document.getElementById("altTextProgressContainer");
+  const atBar = document.getElementById("altTextProgress");
+  if (atContainer && atBar) {
+    atBar.style.width = "0%";
+    atBar.textContent = "";
+    atContainer.style.display = "none";
+  }
+}
+
+function showThumbnail(filename) {
+    currentImage = filename;
+    let imageUrl = `/pdf_processor/extracted_images/${sid}/${filename}?t=${Date.now()}`;
+    const thumbnail = document.getElementById("thumbnail");
+    thumbnail.src = imageUrl;
+    thumbnail.style.display = "block";
+
+    // ✅ Only highlight the clicked one IF it's not already selected (for Ctrl/Shift cases)
+    const selectedItem = document.querySelector(`[data-filename="${filename}"]`);
+    if (selectedItem && !selectedItem.classList.contains("selected")) {
+    }
+}
+
+        function moveImage(fromId, toId) {
+            const fromList = document.getElementById(fromId);
+            const toList = document.getElementById(toId);
+            const selectedItems = fromList.querySelectorAll(".selected");
+
+            if (selectedItems.length === 0) {
+                alert("Please select one or more images to move.");
+                return;
+            }
+
+            selectedItems.forEach(item => {
+                item.classList.remove("selected");
+                toList.appendChild(item);
+            });
+        }
+
+        function flipImage(direction) {
+            if (!currentImage) {
+                alert("Select an image first.");
+                return;
+            }
+            fetch(`/pdf_processor/flip_image/${sid}/${currentImage}/${direction}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById("thumbnail").src =
+                            `/pdf_processor/extracted_images/${sid}/${currentImage}?t=${Date.now()}`;
+                    } else {
+                        alert("Error flipping image.");
+                    }
+                });
+        }
+
+document.getElementById("generateEnglishBtn").addEventListener("click", function () {
+    localStorage.setItem("altTextLang", "en");
+    generateAltText("en");
+});
+
+document.getElementById("generateSpanishBtn").addEventListener("click", function () {
+    localStorage.setItem("altTextLang", "es");
+    generateAltText("es");
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    let lists = document.querySelectorAll("#process-list, #exclude-list");
+
+    lists.forEach(list => {
+        list.addEventListener("keydown", function (event) {
+            let selected = this.querySelector(".selected");
+            let items = Array.from(this.children);
+
+            if (event.key === "ArrowDown") {
+                event.preventDefault();
+                if (selected) {
+                    let next = selected.nextElementSibling;
+                    if (next) {
+                        selected.classList.remove("selected");
+                        next.classList.add("selected");
+                        next.scrollIntoView({ block: "nearest" });
+                        showThumbnail(next.dataset.filename);
+                    }
+                } else if (items.length > 0) {
+                    items[0].classList.add("selected");
+                    items[0].scrollIntoView({ block: "nearest" });
+                    showThumbnail(items[0].dataset.filename);
+                }
+            }
+
+            if (event.key === "ArrowUp") {
+                event.preventDefault();
+                if (selected) {
+                    let prev = selected.previousElementSibling;
+                    if (prev) {
+                        selected.classList.remove("selected");
+                        prev.classList.add("selected");
+                        prev.scrollIntoView({ block: "nearest" });
+                        showThumbnail(prev.dataset.filename);
+                    }
+                }
+            }
+        });
+
+        // ✅ Set lists to be focusable for keyboard navigation
+        list.setAttribute("tabindex", "0");
+    });
+});
+
+document.getElementById("openCopyPanel").addEventListener("click", function (e) {
+  if (!copyPanelAvailable) {
+    e.preventDefault();  // don't navigate to "#"
+    return;
+  }
+});
+
+function generateAltText(lang) {
+    hasDownloaded = false;
+
+    const altTextProgressContainer = document.getElementById("altTextProgressContainer");
+    const altTextProgress = document.getElementById("altTextProgress");
+    altTextProgress.style.width = "0%";
+    altTextProgress.textContent = "";
+    altTextProgressContainer.style.display = "block";
+
+    const selectedImages = Array.from(document.querySelectorAll("#process-list .list-item"))
+        .map(item => item.dataset.filename);
+
+    console.log("🔌 Connecting to /alt_text_progress...");
+    if (altTextEventSource) {
+        altTextEventSource.close();
+        console.log("🛑 Closed previous altTextEventSource");
+    }
+    altTextEventSource = new EventSource(`/pdf_processor/alt_text_progress/?sid=${encodeURIComponent(sid)}&t=${Date.now()}`);
+
+    altTextEventSource.onopen = function () {
+        console.log("✅ SSE connection to /alt_text_progress opened");
+    };
+
+    altTextEventSource.onerror = function (err) {
+        if (hasDownloaded) {
+            console.log("ℹ️ SSE closed cleanly after completion.");
+        } else {
+            console.error("❌ Alt Text SSE connection error:", err);
+        }
+    };
+
+    fetch("/pdf_processor/generate_alt_text/", {
+        method: "POST",
+        headers: { 
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie('csrftoken')
+        },
+        cache: "no-store",
+        body: JSON.stringify({ images: selectedImages, lang, sid })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                currentSessionId = sid;  // ✅ we already know the sid
+                currentLang = lang;
+            altTextEventSource.onmessage = function (event) {
+                // now receiving "percent|done|total"
+                const [rawPercent, rawDone, rawTotal] = (event.data || "").split("|");
+                const percent = parseInt(rawPercent || "0", 10);
+                const done = parseInt(rawDone || "0", 10);
+                const total = parseInt(rawTotal || "0", 10);
+
+                console.log("Alt Text Progress update:", percent, done, total);
+
+                altTextProgress.style.width = percent + "%";
+                altTextProgress.textContent = total ? `${done} of ${total}` : `${percent}%`;
+
+                if (percent >= 100 && !hasDownloaded) {
+                    altTextEventSource.close();
+                    console.log("🛑 Closed alt text SSE after reaching 100%");
+
+                    // Mark available and show the button
+                    const cp = document.getElementById("openCopyPanel");
+                    cp.href = `/pdf_processor/copy_panel/${sid}/`;
+                    copyPanelAvailable = true;
+                    document.getElementById("readyWrap").classList.add("show");
+
+                    // keep your auto-download flow
+                    startDownloadPolling();
+                }
+            };
+            
+        } else {
+            alert("❌ Failed to generate alt text.");
+        }
+    })
+    .catch(error => {
+        console.error("Alt text generation failed:", error);
+    });
+}
+
+async function saveDocxBlob(blob, suggestedName) {
+  try {
+    if (window.showSaveFilePicker) {
+      // Real Save As dialog (Chromium)
+      const handle = await showSaveFilePicker({
+        suggestedName,
+        types: [{
+          description: "Word Document",
+          accept: { "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"] }
+        }]
+      });
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+    } else {
+      // Fallback: regular download (auto-saves to Downloads in many browsers)
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = suggestedName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+    return true;
+  } catch (err) {
+    console.error("Save failed or canceled:", err);
+    return false;
+  }
+}
+
+// ✅ Add this new helper function
+function startDownloadPolling() {
+    if (!currentSessionId || !currentLang) {
+        console.error("❌ Missing sessionId or lang, cannot start polling.");
+        return;
+    }
+
+    if (downloadPollingIntervalId) {
+        clearInterval(downloadPollingIntervalId);
+        downloadPollingIntervalId = null;  // ✅ Ensure no overlap
+        console.log("🧹 Cleared previous polling interval");
+    }
+
+    if (hasDownloaded) {
+        console.log("⛔ Skipping download, already completed.");
+        return;
+    }
+
+    console.log("📡 Polling started");
+    let attempts = 0;
+    const maxAttempts = 30;
+
+    downloadPollingIntervalId = setInterval(() => {
+        if (hasDownloaded) {
+            console.warn("⛔ Polling skipped — already downloaded.");
+            clearInterval(downloadPollingIntervalId);
+            downloadPollingIntervalId = null;
+            return;
+        }
+
+        fetch(`/pdf_processor/download_word/?lang=${encodeURIComponent(currentLang)}&id=${encodeURIComponent(currentSessionId)}&t=${Date.now()}`, {
+            method: "GET",
+            cache: "no-store"
+            })
+            .then(response => {
+                if (!response.ok) throw new Error("File not ready");
+                return response.blob();
+            })
+            .then(blob => {
+                if (hasDownloaded) {
+                    console.warn("🚫 Duplicate download attempt blocked.");
+                    return;
+                    }
+
+                    // Stash the blob and show a small modal so we have a user gesture for Save-As
+                    pendingDocxBlob = blob;
+                    pendingDocxName = `alt_text_results_${currentSessionId}_${currentLang}.docx`;
+
+                    const modalEl = document.getElementById("saveModal");
+                    const modal = new bootstrap.Modal(modalEl);
+                    modal.show();
+
+                    // NOTE: We do NOT set hasDownloaded yet — we wait until the user actually saves.
+                    // Also stop polling now that we have the blob.
+                    clearInterval(downloadPollingIntervalId);
+                    downloadPollingIntervalId = null;
+                    console.log("📦 Docx ready; awaiting user Save click.");
+            })
+            .catch(err => {
+                console.log("⏳ File not ready, retrying...");
+            });
+    }, 1500);
+
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("confirmSaveBtn");
+  if (btn) {
+    btn.addEventListener("click", async () => {
+      if (!pendingDocxBlob || !pendingDocxName) {
+        console.error("No pending blob to save.");
+        return;
+      }
+      const ok = await saveDocxBlob(pendingDocxBlob, pendingDocxName);
+      if (ok) {
+        hasDownloaded = true;
+        // Cleanup + close modal
+        pendingDocxBlob = null;
+        pendingDocxName = null;
+        const modalEl = document.getElementById("saveModal");
+        const instance = bootstrap.Modal.getInstance(modalEl);
+        instance?.hide();
+        console.log("✅ File saved.");
+      }
+    });
+  }
+});
+
+
+document.getElementById("uploadForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    imageExtractionComplete = false;
+
+    // 🔒 Make sure no previous streams/timers are still running
+    try { altTextEventSource?.close(); } catch {}
+    try { imageEventSource?.close(); } catch {}
+    if (downloadPollingIntervalId) {
+        clearInterval(downloadPollingIntervalId);
+        downloadPollingIntervalId = null;
+    }
+
+    hasDownloaded = false;
+    imageFilenames = [];
+    lastClickedItem = e.target;
+    currentImage = null;
+
+    // Clear lists and thumbnail
+    document.getElementById("process-list").innerHTML = "";
+    document.getElementById("exclude-list").innerHTML = "";
+    const thumb = document.getElementById("thumbnail");
+    if (thumb) {
+        thumb.src = "";
+        thumb.style.display = "none";
+    }
+
+    // 👇 Fresh upload: reset UI and show image extraction bar at 0%
+    resetProgressUI({ freshUpload: true });
+
+    console.log("🔄 Reset state before new upload");
+
+    const form = document.getElementById("uploadForm");
+    const formData = new FormData(form);
+
+    console.log("🔍 FormData contains:", Array.from(formData.entries()));
+
+    // Hide Copy Panel button for a fresh run
+    copyPanelAvailable = false;
+    document.getElementById("readyWrap").classList.remove("show");
+    document.getElementById("openCopyPanel").removeAttribute("href");
+
+    fetch("/pdf_processor/upload/", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": getCookie('csrftoken')
+        },
+        body: formData,
+        cache: "no-store"
+        })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw err; });
+        }
+        return response.json();
+    })
+    .then(data => {
+        sid = data.sid;
+        startImageExtractionProgressSSE(sid);
+        pollImagesUntilReady();
+        imageFilenames = data.images;
+        refreshImageList(imageFilenames);
+        document.getElementById("uploadError").style.display = "none";
+    })
+    .catch(error => {
+        console.error("Upload failed:", error);
+        const errMsg = error.error || "An unknown error occurred.";
+        const errorDiv = document.getElementById("uploadError");
+        errorDiv.textContent = errMsg;
+        errorDiv.style.display = "block";
+    });
+});
+
+function refreshImageList(images) {
+    console.log("🚨 refreshImageList() was called with", images);
+    // ✅ Allow refresh even if extraction is complete
+    if (!images || images.length === 0) {
+        console.log("⛔ No images provided to refreshImageList");
+        return;
+    }
+
+    const label = document.getElementById("imageExtractPercent");
+
+    console.log("🚨 refreshImageList() called after progress");
+
+    let noImagesMsg = document.querySelector(".no-images-message");
+    if (noImagesMsg) {
+        noImagesMsg.style.display = "none";
+    }
+
+    const processList = document.getElementById("process-list");
+    const excludeList = document.getElementById("exclude-list");
+
+    processList.innerHTML = "";
+    excludeList.innerHTML = "";
+
+    images.forEach(image => {
+        const li = document.createElement("li");
+        li.classList.add("list-item");
+
+        const filenameOnly = image.split(/[/\\]+/).pop();
+
+        li.setAttribute("data-filename", filenameOnly);
+        li.onclick = function () {
+            showThumbnail(filenameOnly);
+        };
+        li.textContent = filenameOnly;
+
+        processList.appendChild(li);
+    });
+
+    document.getElementById("action-controls").style.display = "block";
+    document.getElementById("preview-controls").style.display = "block";
+}
+
+let lastClickedItem = null;
+let imageExtractionComplete = false;
+
+document.addEventListener("click", function (e) {
+    // Ensure it's a list-item in either column
+    if (!e.target.classList.contains("list-item")) return;
+
+    e.preventDefault(); // ✅ Prevent default browser behavior (important for ctrl+click)
+
+    const isCtrl = e.ctrlKey || e.metaKey;
+    const isShift = e.shiftKey;
+
+    const listItems = Array.from(e.target.parentElement.children);
+
+    if (isShift && lastClickedItem && lastClickedItem.parentElement === e.target.parentElement) {
+        // ✅ Range select in the same list
+        const start = listItems.indexOf(lastClickedItem);
+        const end = listItems.indexOf(e.target);
+        const [min, max] = [Math.min(start, end), Math.max(start, end)];
+
+        listItems.slice(min, max + 1).forEach(item => item.classList.add("selected"));
+    } else if (isCtrl) {
+        // ✅ Toggle individual selection
+        e.target.classList.toggle("selected");
+        lastClickedItem = e.target;
+    } else {
+        // ✅ Single select resets all others
+        document.querySelectorAll(".list-item").forEach(item => item.classList.remove("selected"));
+        e.target.classList.add("selected");
+        lastClickedItem = e.target;
+    }
+});
+
+    </script>
+
+<script>
+// Start image extraction progress via SSE.
+// Closes any prior stream; adds a cache-buster param.
+function startImageExtractionProgressSSE(sid) {
+  console.log("📢 startImageExtractionProgressSSE() for", sid);
+  if (imageExtractionComplete) {
+    console.log("⛔ Skipping: already complete");
+    return;
+  }
+
+  // Close any prior image SSE before starting a new one
+  try { imageEventSource?.close(); } catch {}
+  imageEventSource = null;
+
+  const container = document.getElementById("imageExtractProgressContainer");
+  const bar = document.getElementById("imageExtractProgress");
+  const label = document.getElementById("imageExtractPercent");
+
+  container.style.display = "block";
+  let progressComplete = false;
+
+  const url = `/pdf_processor/image_progress/?sid=${encodeURIComponent(sid)}&t=${Date.now()}`;
+  imageEventSource = new EventSource(url);
+
+  // 1) Custom status messages from the server
+  imageEventSource.addEventListener("status", function (event) {
+    const el = document.getElementById("imageStatus");
+    if (!el) return;
+
+    if (event.data === "Done") {
+        el.innerHTML = "Images extracted.<br>Please select images to include or exclude for alt text generation.";
+        el.classList.add("done-status");
+    } else {
+        el.textContent = event.data;
+        el.classList.remove("done-status");
+    }
+    });
+
+  // 2) Named server error events (different from transport onerror)
+  imageEventSource.addEventListener("error", function (event) {
+    console.error("Server extraction error:", event.data);
+    const el = document.getElementById("uploadError");
+    if (el) {
+      el.textContent = event.data || "Image extraction failed.";
+      el.style.display = "block";
+    }
+    try { imageEventSource?.close(); } catch {}
+    imageEventSource = null;
+  });
+
+  // 3) Numeric % updates (default message event)
+  imageEventSource.onmessage = function (event) {
+    const percent = parseInt(event.data || "0", 10);
+    if (progressComplete || imageExtractionComplete) return;
+
+    if (percent < 100) {
+      bar.value = percent;
+      label.textContent = `${percent}%`;
+
+      // Clear status once we start showing actual %
+      if (percent > 0) {
+        const el = document.getElementById("imageStatus");
+        if (el) el.textContent = "";
+      }
+    } else {
+      progressComplete = true;
+      imageExtractionComplete = true;
+      bar.value = 100;
+      label.textContent = "Image Extraction Complete";
+      try { imageEventSource?.close(); } catch {}
+      imageEventSource = null;
+      setTimeout(() => { container.style.display = "none"; }, 1200);
+    }
+  };
+
+  // 4) Transport-level SSE errors (e.g., network)
+  imageEventSource.onerror = function (err) {
+    console.error("SSE (image) transport error:", err);
+    try { imageEventSource?.close(); } catch {}
+    imageEventSource = null;
+  };
+}
+
+// Poll for images ONLY after extraction completes (prevents partial lists).
+function pollImagesUntilReady() {
+  const interval = setInterval(() => {
+    if (!imageExtractionComplete) return; // wait until SSE hit 100
+
+    fetch(`/pdf_processor/images/?sid=${encodeURIComponent(sid)}&t=${Date.now()}`, { cache: "no-store" })
+      .then(r => r.json())
+      .then(data => {
+        if (!data || !data.success) return;
+        // At 100%, images.json should be present; now we can paint the list once.
+        clearInterval(interval);
+        imageFilenames = data.images || [];
+        refreshImageList(imageFilenames);
+      })
+      .catch(() => {});
+  }, 800);
+}
+</script>
+<!-- Save-As Modal -->
+<div class="modal fade" id="saveModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background:#1f1f1f; color:#fff; border:1px solid #fd6262;">
+      <div class="modal-header">
+        <h5 class="modal-title">Word file ready</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                style="filter:invert(1);"></button>
+      </div>
+      <div class="modal-body">
+        Your .docx has finished generating. Click <strong>Save</strong> to choose where to save it.
+      </div>
+      <div class="modal-footer">
+        <button id="confirmSaveBtn" type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+});
+</script>
+</body>
+</html>
